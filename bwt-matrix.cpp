@@ -46,11 +46,12 @@ int main(int argc, char** argv){
 	}
 
 	string input = string(argv[1]);
-	string orig_input = input;
 
 	bool rev=false;
 
 	input = input + '#';
+
+	string orig_input = string(input);
 
 	if(argc>2 and string(argv[2]).compare("rev")==0){
 
@@ -165,9 +166,9 @@ int main(int argc, char** argv){
 
 		for(int i=0;i<orig_input.length();++i){
 
-			if(runs_i.find(i)!=runs_i.end()) cout << "\\textbf{";
+			if(runs_i.find(i)!=runs_i.end()) cout << "\\underline{\\textbf{";
 			cout << i;
-			if(runs_i.find(i)!=runs_i.end()) cout << "}";
+			if(runs_i.find(i)!=runs_i.end()) cout << "}}";
 
 			if(i<orig_input.length()-1) cout << " & ";
 
@@ -178,6 +179,7 @@ int main(int argc, char** argv){
 		j=0;
 		for(auto c:orig_input){
 
+			if(c=='#') cout << "\\";
 			cout << c;
 			if(j<orig_input.length()-1) cout << " & ";
 
