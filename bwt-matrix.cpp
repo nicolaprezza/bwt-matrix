@@ -51,8 +51,6 @@ int main(int argc, char** argv){
 
 	input = input + '#';
 
-	string orig_input = string(input);
-
 	if(argc>2 and string(argv[2]).compare("rev")==0){
 
 		rev=true;
@@ -63,11 +61,11 @@ int main(int argc, char** argv){
 	auto comp = [](suf x, suf y){ return x.second.compare(y.second) < 0; };
 	std::set<suf,decltype(comp)> rotations(comp);
 
-	string current_rotation = input;
+	string current_rotation = string(input);
 
 	for(int i=0;i<input.size();++i){
 
-		rotations.insert({(rev?input.size()-i:i-1)%input.size(),current_rotation});
+		rotations.insert({((rev?input.size()-i:i-1)+input.size())%input.size(),current_rotation});
 
 		current_rotation = left_rotate(current_rotation);
 
@@ -160,28 +158,28 @@ int main(int argc, char** argv){
 
 	cout << "\\begin{tabular}{";
 
-		for(int i=0;i<orig_input.length();++i) cout << "c";
+		for(int i=0;i<input.length();++i) cout << "c";
 
 		cout << " }" << endl;
 
-		for(int i=0;i<orig_input.length();++i){
+		for(int i=0;i<input.length();++i){
 
 			if(runs_i.find(i)!=runs_i.end()) cout << "\\underline{\\textbf{";
 			cout << i;
 			if(runs_i.find(i)!=runs_i.end()) cout << "}}";
 
-			if(i<orig_input.length()-1) cout << " & ";
+			if(i<input.length()-1) cout << " & ";
 
 		}
 
 		cout << "\\\\" << endl;
 
 		j=0;
-		for(auto c:orig_input){
+		for(auto c:input){
 
 			if(c=='#') cout << "\\";
 			cout << c;
-			if(j<orig_input.length()-1) cout << " & ";
+			if(j<input.length()-1) cout << " & ";
 
 			j++;
 
