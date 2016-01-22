@@ -152,7 +152,7 @@ int main(int argc, char** argv){
 
 	cout << "\\end{tabular}" << endl;
 
-	cout << endl << "\\ \\\\\\ \\\\" << endl << endl;
+	/*cout << endl << "\\ \\\\\\ \\\\" << endl << endl;
 
 	cout << "\\setlength{\\tabcolsep}{1pt}" << endl;
 
@@ -187,7 +187,7 @@ int main(int argc, char** argv){
 
 		cout << "\\\\" << endl;
 
-		cout << "\\end{tabular}" << endl;
+		cout << "\\end{tabular}" << endl;*/
 
 		cout << "\\end{center}";
 

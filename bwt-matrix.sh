@@ -1,4 +1,4 @@
-temp=/home/nico/workspace/bwt-matrix/temp
+temp=~/workspace/bwt-matrix/temp
 mkdir $temp
 
 bwt-matrix $1 > $temp/source.tex
