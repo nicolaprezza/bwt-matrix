@@ -73,12 +73,9 @@ int main(int argc, char** argv){
 
 	vector<bool> runs;
 
-	set<int> runs_i;
-
-	runs_i.insert(0);
+	set<int> runs_i;//positions of run beginnings
 
 	char last_c;
-	int last_sa;
 
 	int j=0;
 	for(auto r : rotations){
@@ -86,7 +83,7 @@ int main(int argc, char** argv){
 		if(j==0){
 
 			last_c = r.second[r.second.length()-1];//BWT character
-			last_sa = r.first;
+			runs_i.insert(r.first);
 
 		}else{
 
@@ -95,13 +92,11 @@ int main(int argc, char** argv){
 			if(last_c!=c){
 
 				runs_i.insert(r.first);
-				runs_i.insert(last_sa);
 
 			}
 
 			runs.push_back(last_c!=c);
 			last_c = c;
-			last_sa = r.first;
 
 		}
 
@@ -109,7 +104,6 @@ int main(int argc, char** argv){
 
 	}
 
-	runs_i.insert(last_sa);
 	runs.push_back(true);
 
 	cout << "\\documentclass[]{article}" << endl;
@@ -126,20 +120,27 @@ int main(int argc, char** argv){
 
 	cout << "\\begin{center}";
 
-	cout << "\\begin{tabular}{";
+	cout << "\\begin{tabular}{r || ";
 
 	for(int i=0;i<input.length()-1;++i) cout << "c";
 
-	cout << "| c || r }" << endl;
+	cout << "| c }" << endl;
 	cout << "\\hline" << endl;
 
 	j=0;
 	for(auto r : rotations){
 
-		for(auto c : r.second)
-			cout << (c=='#'?"\\#":string()+c) << " & ";
+		cout << (r.first+1)%input.length() << " & ";
 
-		cout << r.first << " \\\\ ";
+		int k=0;
+		for(auto c : r.second){
+
+			cout << (c=='#'?"\\#":string()+c);
+			if(k++<r.second.size()-1) cout << " & ";
+
+		}
+
+		cout << " \\\\ ";
 
 		if(runs[j])
 			cout << "\\hline" << endl;
@@ -152,7 +153,7 @@ int main(int argc, char** argv){
 
 	cout << "\\end{tabular}" << endl;
 
-	/*cout << endl << "\\ \\\\\\ \\\\" << endl << endl;
+	cout << endl << "\\ \\\\\\ \\\\" << endl << endl;
 
 	cout << "\\setlength{\\tabcolsep}{1pt}" << endl;
 
@@ -164,9 +165,7 @@ int main(int argc, char** argv){
 
 		for(int i=0;i<input.length();++i){
 
-			if(runs_i.find(i)!=runs_i.end()) cout << "\\underline{\\textbf{";
 			cout << i;
-			if(runs_i.find(i)!=runs_i.end()) cout << "}}";
 
 			if(i<input.length()-1) cout << " & ";
 
@@ -177,8 +176,11 @@ int main(int argc, char** argv){
 		j=0;
 		for(auto c:input){
 
+			if(runs_i.find(j)!=runs_i.end()) cout << "\\underline{\\textbf{";
 			if(c=='#') cout << "\\";
 			cout << c;
+			if(runs_i.find(j)!=runs_i.end()) cout << "}}";
+
 			if(j<input.length()-1) cout << " & ";
 
 			j++;
@@ -187,7 +189,7 @@ int main(int argc, char** argv){
 
 		cout << "\\\\" << endl;
 
-		cout << "\\end{tabular}" << endl;*/
+		cout << "\\end{tabular}" << endl;
 
 		cout << "\\end{center}";
 
